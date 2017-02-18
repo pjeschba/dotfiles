@@ -8,9 +8,14 @@
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="bashrc vimrc vim zshrc oh-my-zsh"    # list of files/folders to symlink in homedir
+files="bashrc vimrc bash_profile"    # list of files/folders to symlink in homedir
 
 ##########
+
+# Installing Vundle
+echo "Installing Vundle"
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+echo "...done"
 
 # create dotfiles_old in homedir
 echo "Creating $olddir for backup of any existing dotfiles in ~"
@@ -29,3 +34,9 @@ for file in $files; do
 	echo "Creating symlink to $file in home directory."
 	ln -s $dir/$file ~/.$file
 done
+
+# Installing vim plugins
+echo "Installing vim plugins"
+vim +PluginInstall +qall
+echo "...done"
+

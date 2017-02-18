@@ -4,7 +4,7 @@ filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call vundle#begin('~/.vim/bundle')
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -78,7 +78,7 @@ set clipboard=unnamed
 " Visual stuff
 syntax enable
 set background=dark
-colorscheme jellybeans
+silent! colorscheme jellybeans " Silent so there's no error on install
 let g:airline_theme='jellybeans'
 let g:airline_powerline_fonts = 1
 set laststatus=2
