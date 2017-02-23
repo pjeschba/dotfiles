@@ -1,3 +1,6 @@
+" TODO: So that gq will properly fix python lines (not put on multiple lines
+" without accounting for expressions)
+
 set number
 set nocompatible              " required
 filetype off                  " required
@@ -12,9 +15,10 @@ Plugin 'gmarik/Vundle.vim'
 " Indentation plugin
 Plugin 'vim-scripts/indentpython.vim'
 
-" Autocomplete plugin
+" Autocomplete plugins
 Plugin 'ervandew/supertab'
-Plugin 'davidhalter/jedi-vim'
+Plugin 'roxma/vim-hug-neovim-rpc'
+Plugin 'roxma/nvim-completion-manager' "Wrapper for vim instead of neovim
 
 " Syntax plugin
 Plugin 'w0rp/ale'
@@ -22,6 +26,8 @@ Plugin 'w0rp/ale'
 " Color scheme
 Plugin 'w0ng/vim-hybrid'
 Plugin 'nanotech/jellybeans.vim'
+Plugin 'tomasr/molokai'
+Plugin 'jnurmine/Zenburn'
 
 " Airline setup
 Plugin 'vim-airline/vim-airline'
@@ -33,6 +39,9 @@ Plugin 'ntpeters/vim-better-whitespace'
 " File manager
 Plugin 'ctrlpvim/ctrlp.vim'
 
+" Git plugins
+Plugin 'tpope/vim-fugitive'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -41,36 +50,31 @@ filetype plugin indent on    " required
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
 " turn off search highlight
-nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <silent><C-l> :nohlsearch<CR><C-l>
 
 " Style stuff
+
+" BetterWhitespace Settings
+" Don't highlight for curr line
+au BufEnter * CurrentLineWhitespaceOff hard
+" Strips whitespace on save
+au BufEnter * EnableStripWhitespaceOnSave
+
+" General file settings
+au BufNewFile,BufRead *
+    \ set autoindent |
+    \ set fileformat=unix |
+    \ set tw=79 |
+    \ set expandtab |
+    \ set formatoptions+=tcq
 au BufNewFile,BufRead *.py
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
-    \ set expandtab |
-    \ set autoindent |
-    \ set fileformat=unix |
-    \ set tw=79 |
-    \ set formatoptions+=t |
-
-au BufNewFile,BufRead *.js
+au BufNewFile,BufRead *.js, *.html
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2 |
-    \ set expandtab |
-    \ set autoindent |
-    \ set fileformat=unix |
-    \ set tw=79 |
-    \ set formatoptions+=t |
-
-au BufNewFile,BufRead *.html
-    \ set tabstop=2 |
-    \ set softtabstop=2 |
-    \ set shiftwidth=2 |
-    \ set expandtab |
-    \ set autoindent |
-    \ set fileformat=unix |
 
 " Allowing copypaste from regular clipboard
 set clipboard=unnamed
@@ -78,7 +82,9 @@ set clipboard=unnamed
 " Visual stuff
 syntax enable
 set background=dark
-silent! colorscheme jellybeans " Silent so there's no error on install
+colorscheme jellybeans
 let g:airline_theme='jellybeans'
 let g:airline_powerline_fonts = 1
 set laststatus=2
+let g:airline#extensions#branch#enabled=1 " Shows git branch in statusbar
+let g:ale_lint_delay=1000 " Lint after a delay
