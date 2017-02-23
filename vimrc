@@ -1,6 +1,8 @@
 " TODO: So that gq will properly fix python lines (not put on multiple lines
 " without accounting for expressions)
 
+" Get gutentags working!
+
 set number
 set nocompatible              " required
 filetype off                  " required
@@ -18,7 +20,14 @@ Plugin 'vim-scripts/indentpython.vim'
 " Autocomplete plugins
 Plugin 'ervandew/supertab'
 Plugin 'roxma/vim-hug-neovim-rpc'
-Plugin 'roxma/nvim-completion-manager' "Wrapper for vim instead of neovim
+Plugin 'roxma/nvim-completion-manager' " Wrapper for vim instead of neovim
+
+" Snippets
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets' " Default snippets for some languages
+
+" Tags plugin
+Plugin 'ludovicchabant/vim-gutentags'
 
 " Syntax plugin
 Plugin 'w0rp/ale'
@@ -40,7 +49,8 @@ Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'ctrlpvim/ctrlp.vim'
 
 " Git plugins
-Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-fugitive' " Interface to execute git commands w/in vim
+Plugin 'airblade/vim-gitgutter' " Shows changes from master on vim sidebar
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -58,15 +68,15 @@ nnoremap <silent><C-l> :nohlsearch<CR><C-l>
 " Don't highlight for curr line
 au BufEnter * CurrentLineWhitespaceOff hard
 " Strips whitespace on save
-au BufEnter * EnableStripWhitespaceOnSave
+" au BufEnter * EnableStripWhitespaceOnSave
 
 " General file settings
 au BufNewFile,BufRead *
     \ set autoindent |
-    \ set fileformat=unix |
+    \ silent! set fileformat=unix | " Silent in case it's read only
     \ set tw=79 |
     \ set expandtab |
-    \ set formatoptions+=tcq
+    \ set formatoptions+=t,c,r,o,q,w,a
 au BufNewFile,BufRead *.py
     \ set tabstop=4 |
     \ set softtabstop=4 |

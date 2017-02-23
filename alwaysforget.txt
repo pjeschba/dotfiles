@@ -1,0 +1,5 @@
+# Pat's command list cheatsheet
+
+# Compression
+zip <zip_name> <list of files to be included>
+zip -r <zip_name> <list of files to be included>
