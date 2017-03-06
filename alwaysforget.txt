@@ -3,3 +3,11 @@
 # Compression
 zip <zip_name> <list of files to be included>
 zip -r <zip_name> <list of files to be included>
+
+# Vim commands
+:e <filename>     # Creates new file buffer and opens it in current window
+]p                # Pasting in at the current indentation
+<C-]>             # Jump to the definition of a tag
+# Ctrlp commands
+<C-v>             # open a file in a vertical split
+F5      	  # refreshes cache (useful when you've created new files 

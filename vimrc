@@ -5,6 +5,7 @@
 
 set number
 set nocompatible              " required
+set hidden " Hides buffers instead of closing them
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -19,8 +20,10 @@ Plugin 'vim-scripts/indentpython.vim'
 
 " Autocomplete plugins
 Plugin 'ervandew/supertab'
-Plugin 'roxma/vim-hug-neovim-rpc'
-Plugin 'roxma/nvim-completion-manager' " Wrapper for vim instead of neovim
+Plugin 'roxma/vim-hug-neovim-rpc' "Wrapper for vim instead of neovim
+Plugin 'roxma/nvim-completion-manager'
+Plugin 'roxma/clang_complete' " C/C++ autocompletion
+Plugin 'roxma/nvim-cm-tern',  {'do': 'npm install'} " Javascript autocompletion
 
 " Snippets
 Plugin 'SirVer/ultisnips'
@@ -71,20 +74,23 @@ au BufEnter * CurrentLineWhitespaceOff hard
 " au BufEnter * EnableStripWhitespaceOnSave
 
 " General file settings
+" tells completion manager where clang is for cpp completion
+let g:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib'
+
 au BufNewFile,BufRead *
     \ set autoindent |
     \ silent! set fileformat=unix | " Silent in case it's read only
     \ set tw=79 |
     \ set expandtab |
     \ set formatoptions+=t,c,r,o,q,w,a
-au BufNewFile,BufRead *.py
+au BufNewFile,BufRead *.py,*.cpp,*.h
     \ set tabstop=4 |
     \ set softtabstop=4 |
-    \ set shiftwidth=4 |
-au BufNewFile,BufRead *.js, *.html
+    \ set shiftwidth=4
+au BufNewFile,BufRead *.js,*.html
     \ set tabstop=2 |
     \ set softtabstop=2 |
-    \ set shiftwidth=2 |
+    \ set shiftwidth=2
 
 " Allowing copypaste from regular clipboard
 set clipboard=unnamed
