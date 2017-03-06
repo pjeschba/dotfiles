@@ -24,6 +24,7 @@ Plugin 'roxma/vim-hug-neovim-rpc' "Wrapper for vim instead of neovim
 Plugin 'roxma/nvim-completion-manager'
 Plugin 'roxma/clang_complete' " C/C++ autocompletion
 Plugin 'roxma/nvim-cm-tern',  {'do': 'npm install'} " Javascript autocompletion
+Plugin 'jiangmiao/auto-pairs' " Autopairing for brackets, quotes, etc
 
 " Snippets
 Plugin 'SirVer/ultisnips'
@@ -40,6 +41,7 @@ Plugin 'w0ng/vim-hybrid'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'tomasr/molokai'
 Plugin 'jnurmine/Zenburn'
+Plugin 'tomasiser/vim-code-dark'
 
 " Airline setup
 Plugin 'vim-airline/vim-airline'
@@ -98,8 +100,8 @@ set clipboard=unnamed
 " Visual stuff
 syntax enable
 set background=dark
-colorscheme jellybeans
-let g:airline_theme='jellybeans'
+colorscheme codedark
+let g:airline_theme='codedark'
 let g:airline_powerline_fonts = 1
 set laststatus=2
 let g:airline#extensions#branch#enabled=1 " Shows git branch in statusbar
