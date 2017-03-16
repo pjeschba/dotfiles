@@ -3,14 +3,14 @@
 
 " Get gutentags working!
 
-set number
+set number " Line numbers
 set nocompatible              " required
 set hidden " Hides buffers instead of closing them
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin('~/.vim/bundle')
+call vundle#begin('~/.vim/bundle') " Calls vundle to use plugins
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -58,8 +58,8 @@ Plugin 'tpope/vim-fugitive' " Interface to execute git commands w/in vim
 Plugin 'airblade/vim-gitgutter' " Shows changes from master on vim sidebar
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call vundle#end()            " end of vundle plugins
+filetype plugin indent on    " enables filetype detection, plugin, and indentation scripts
 
 " Search settings
 set incsearch           " search as characters are entered
@@ -75,20 +75,23 @@ au BufEnter * CurrentLineWhitespaceOff hard
 " Strips whitespace on save
 " au BufEnter * EnableStripWhitespaceOnSave
 
-" General file settings
+" File settings
 " tells completion manager where clang is for cpp completion
 let g:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib'
 
-au BufNewFile,BufRead *
-    \ set autoindent |
-    \ silent! set fileformat=unix | " Silent in case it's read only
-    \ set tw=79 |
-    \ set expandtab |
-    \ set formatoptions+=t,c,r,o,q,w,a
-au BufNewFile,BufRead *.py,*.cpp,*.h
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
-    \ set shiftwidth=4
+" General settings
+autocmd BufNewFile,BufRead * call GenericOptions()
+function GenericOptions()
+	set autoindent
+	set formatoptions=t,c,r,q
+	silent! set fileformat=unix " Silent in case it's read only
+	set tw=79
+	set expandtab
+	set tabstop=4
+	set softtabstop=4
+	set shiftwidth=4
+endfunction
+" Filetype specific settings
 au BufNewFile,BufRead *.js,*.html
     \ set tabstop=2 |
     \ set softtabstop=2 |
@@ -100,9 +103,9 @@ set clipboard=unnamed
 " Visual stuff
 syntax enable
 set background=dark
-colorscheme codedark
-let g:airline_theme='codedark'
+colorscheme jellybeans
+let g:airline_theme='jellybeans'
 let g:airline_powerline_fonts = 1
 set laststatus=2
 let g:airline#extensions#branch#enabled=1 " Shows git branch in statusbar
-let g:ale_lint_delay=1000 " Lint after a delay
+" let g:ale_lint_delay=1000 " Lint after a delay

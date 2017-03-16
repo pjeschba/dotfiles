@@ -6,8 +6,14 @@ zip -r <zip_name> <list of files to be included>
 
 # Vim commands
 :e <filename>     # Creates new file buffer and opens it in current window
+:verbose set <option> # Tells you when a vimrc option was last set
 ]p                # Pasting in at the current indentation
+<C-t>             # Jump back from a tag definition
 <C-]>             # Jump to the definition of a tag
 # Ctrlp commands
 <C-v>             # open a file in a vertical split
-F5      	  # refreshes cache (useful when you've created new files 
+<C-f>, <C-b>      # switching between modes (buffers, files, MRU)
+F5      	      # refreshes cache (useful when you've created new files
+# Search and replace
+:s/foo/bar/g	  # Change each 'foo' to 'bar' in the current line.
+:%s/foo/bar/g	  # Change each 'foo' to 'bar' in all the lines.
