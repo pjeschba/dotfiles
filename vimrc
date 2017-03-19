@@ -96,6 +96,11 @@ au BufNewFile,BufRead *.js,*.html
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
+" Opens any file with doc in it in a vertical split
+augroup helpfiles
+    au!
+    au BufRead,BufEnter */doc/* wincmd L
+augroup END
 
 " Allowing copypaste from regular clipboard
 set clipboard=unnamed
@@ -104,6 +109,7 @@ set clipboard=unnamed
 syntax enable
 set background=dark
 colorscheme jellybeans
+let g:ale_sign_column_always = 1 " Makes ale linting gutter always on
 let g:airline_theme='jellybeans'
 let g:airline_powerline_fonts = 1
 set laststatus=2

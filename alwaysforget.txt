@@ -1,5 +1,11 @@
 # Pat's command list cheatsheet
 
+# Shell stuff
+<C-r>             # allows you to search prior terminal commands (instead of
+                  # spamming up arrow)
+# Querying documentation from the terminal
+pydoc <thing to lookup>
+
 # Compression
 zip <zip_name> <list of files to be included>
 zip -r <zip_name> <list of files to be included>
@@ -10,6 +16,9 @@ zip -r <zip_name> <list of files to be included>
 ]p                # Pasting in at the current indentation
 <C-t>             # Jump back from a tag definition
 <C-]>             # Jump to the definition of a tag
+<C-o>             # Return to the previous spot in the code
+yi<one of ),],'>  # yank everything until closing character
+help <name_of_doc># Opens documentation for a particular thing (plugin, etc) 
 # Ctrlp commands
 <C-v>             # open a file in a vertical split
 <C-f>, <C-b>      # switching between modes (buffers, files, MRU)
