@@ -3,22 +3,39 @@
 # Shell stuff
 <C-r>             # allows you to search prior terminal commands (instead of
                   # spamming up arrow)
-# Querying documentation from the terminal
+cp -r <source> <destination> # copy directories from one place to another
+tar -zxvf <tarfile> # Untarring a tar into current directory
+# Querying from the terminal
 pydoc <thing to lookup>
+find <file to lookup># Seaches a directory for a file
+locate <file to lookup>#Searches whole comptuer for a file
 
 # Compression
 zip <zip_name> <list of files to be included>
 zip -r <zip_name> <list of files to be included>
 
+# Git commands
+git reset <filename> # Removes the file from staging area
+
+# Permissions
+chmod             # How we change permissions
++x                # Gives permission to run file as an executable
+
 # Vim commands
 :e <filename>     # Creates new file buffer and opens it in current window
+:vs <filename     # Creates vertical split window
 :verbose set <option> # Tells you when a vimrc option was last set
-]p                # Pasting in at the current indentation
+]p                # Pasting in at the current indentation AFTER current line
+[p                # Pasting in at the current indentation BEFORE current line
 <C-t>             # Jump back from a tag definition
 <C-]>             # Jump to the definition of a tag
 <C-o>             # Return to the previous spot in the code
 yi<one of ),],'>  # yank everything until closing character
-help <name_of_doc># Opens documentation for a particular thing (plugin, etc) 
+i                 # Means "in" (a way of referring to a chunk of something,
+                  # just like "w" for word, etc)
+a                 # Means "all"
+gqq               # format current line
+help <name_of_doc># Opens documentation for a particular thing (plugin, etc)
 # Ctrlp commands
 <C-v>             # open a file in a vertical split
 <C-f>, <C-b>      # switching between modes (buffers, files, MRU)

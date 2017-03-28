@@ -1,7 +1,7 @@
 " TODO: So that gq will properly fix python lines (not put on multiple lines
 " without accounting for expressions)
+" 2. Bind ALENextWrap and ALEPreviousWrap to shortcutted key bindings
 
-" Get gutentags working!
 
 set number " Line numbers
 set nocompatible              " required
@@ -19,12 +19,11 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'vim-scripts/indentpython.vim'
 
 " Autocomplete plugins
-Plugin 'ervandew/supertab'
+" Plugin 'ervandew/supertab'
 Plugin 'roxma/vim-hug-neovim-rpc' "Wrapper for vim instead of neovim
 Plugin 'roxma/nvim-completion-manager'
 Plugin 'roxma/clang_complete' " C/C++ autocompletion
 Plugin 'roxma/nvim-cm-tern',  {'do': 'npm install'} " Javascript autocompletion
-Plugin 'jiangmiao/auto-pairs' " Autopairing for brackets, quotes, etc
 
 " Snippets
 Plugin 'SirVer/ultisnips'
@@ -102,7 +101,8 @@ augroup helpfiles
     au BufRead,BufEnter */doc/* wincmd L
 augroup END
 
-" Allowing copypaste from regular clipboard
+" Sets vim clipboard to be the same as the system clipboard
+" Lets you copy/paste into vim and vice versa
 set clipboard=unnamed
 
 " Visual stuff
@@ -115,3 +115,11 @@ let g:airline_powerline_fonts = 1
 set laststatus=2
 let g:airline#extensions#branch#enabled=1 " Shows git branch in statusbar
 " let g:ale_lint_delay=1000 " Lint after a delay
+
+" Nvim completion settings
+" don't give |ins-completion-menu| messages.  For example,
+" '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
+set shortmess+=c
+" Tab completion for vim
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
