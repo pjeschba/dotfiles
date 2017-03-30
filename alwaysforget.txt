@@ -9,6 +9,7 @@ tar -zxvf <tarfile> # Untarring a tar into current directory
 pydoc <thing to lookup>
 find <file to lookup># Seaches a directory for a file
 locate <file to lookup>#Searches whole comptuer for a file
+cd -              # Going back to previous directory
 
 # Compression
 zip <zip_name> <list of files to be included>
@@ -21,6 +22,9 @@ git reset <filename> # Removes the file from staging area
 chmod             # How we change permissions
 +x                # Gives permission to run file as an executable
 
+# Regex
+\                 # Use to escape so you can use metacharacters like . * etc
+
 # Vim commands
 :e <filename>     # Creates new file buffer and opens it in current window
 :vs <filename     # Creates vertical split window
@@ -30,7 +34,7 @@ chmod             # How we change permissions
 <C-t>             # Jump back from a tag definition
 <C-]>             # Jump to the definition of a tag
 <C-o>             # Return to the previous spot in the code
-yi<one of ),],'>  # yank everything until closing character
+yi<one of ),],'>  # yank everything until closing character. Can do di, vi, etc
 i                 # Means "in" (a way of referring to a chunk of something,
                   # just like "w" for word, etc)
 a                 # Means "all"

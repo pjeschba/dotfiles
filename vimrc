@@ -2,7 +2,6 @@
 " without accounting for expressions)
 " 2. Bind ALENextWrap and ALEPreviousWrap to shortcutted key bindings
 
-
 set number " Line numbers
 set nocompatible              " required
 set hidden " Hides buffers instead of closing them
@@ -19,11 +18,8 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'vim-scripts/indentpython.vim'
 
 " Autocomplete plugins
-" Plugin 'ervandew/supertab'
-Plugin 'roxma/vim-hug-neovim-rpc' "Wrapper for vim instead of neovim
-Plugin 'roxma/nvim-completion-manager'
-Plugin 'roxma/clang_complete' " C/C++ autocompletion
-Plugin 'roxma/nvim-cm-tern',  {'do': 'npm install'} " Javascript autocompletion
+Plugin 'ervandew/supertab'
+Plugin 'Valloric/YouCompleteMe'
 
 " Snippets
 Plugin 'SirVer/ultisnips'
@@ -60,25 +56,11 @@ Plugin 'airblade/vim-gitgutter' " Shows changes from master on vim sidebar
 call vundle#end()            " end of vundle plugins
 filetype plugin indent on    " enables filetype detection, plugin, and indentation scripts
 
-" Search settings
-set incsearch           " search as characters are entered
-set hlsearch            " highlight matches
-" turn off search highlight
-nnoremap <silent><C-l> :nohlsearch<CR><C-l>
+" Sets vim clipboard to be the same as the system clipboard
+" Lets you copy/paste into vim and vice versa
+set clipboard=unnamed
 
-" Style stuff
-
-" BetterWhitespace Settings
-" Don't highlight for curr line
-au BufEnter * CurrentLineWhitespaceOff hard
-" Strips whitespace on save
-" au BufEnter * EnableStripWhitespaceOnSave
-
-" File settings
-" tells completion manager where clang is for cpp completion
-let g:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib'
-
-" General settings
+" General file settings
 autocmd BufNewFile,BufRead * call GenericOptions()
 function GenericOptions()
 	set autoindent
@@ -101,25 +83,48 @@ augroup helpfiles
     au BufRead,BufEnter */doc/* wincmd L
 augroup END
 
-" Sets vim clipboard to be the same as the system clipboard
-" Lets you copy/paste into vim and vice versa
-set clipboard=unnamed
+" Search settings
+set incsearch           " search as characters are entered
+set hlsearch            " highlight matches
+
+" turn off search highlight
+nnoremap <silent><C-l> :nohlsearch<CR><C-l>
 
 " Visual stuff
 syntax enable
 set background=dark
 colorscheme jellybeans
-let g:ale_sign_column_always = 1 " Makes ale linting gutter always on
+set laststatus=2 " Always display statusline
+
+" BetterWhitespace Settings
+" Don't highlight for curr line
+au BufEnter * CurrentLineWhitespaceOff hard
+
+" Airline Settings
 let g:airline_theme='jellybeans'
 let g:airline_powerline_fonts = 1
-set laststatus=2
 let g:airline#extensions#branch#enabled=1 " Shows git branch in statusbar
-" let g:ale_lint_delay=1000 " Lint after a delay
 
-" Nvim completion settings
-" don't give |ins-completion-menu| messages.  For example,
-" '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
-set shortmess+=c
-" Tab completion for vim
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Ale settings
+let g:ale_sign_column_always = 1 " Makes ale linting gutter always on
+let g:ale_lint_delay = 2000 " Lint after a delay
+
+" YCM Settings
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+" So YCM knows where our compiler flag file is
+let g:ycm_global_ycm_extra_conf = '~/dotfiles/ycm_extra_conf.py'
+let g:ycm_extra_conf_vim_data   = [ '&filetype' ]
+" So YCM knows where to find libclang
+let g:clang_library_path ='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib'
+" Close the preview (docs) window after autocompleting.
+let g:ycm_autoclose_preview_window_after_completion = 1
+" Also close it when leaving insert mode, so that it doesn't stay open 24/7
+let g:ycm_autoclose_preview_window_after_insertion = 1
+
+" UltiSnips settings
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
