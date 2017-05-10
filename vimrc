@@ -1,10 +1,19 @@
 " TODO: So that gq will properly fix python lines (not put on multiple lines
 " without accounting for expressions)
 " 2. Bind ALENextWrap and ALEPreviousWrap to shortcutted key bindings
+" 3. Get gutentags to work with non git directories
 
 set number " Line numbers
 set nocompatible              " required
 set hidden " Hides buffers instead of closing them
+" NOTE: 'noremap' makes the mapping nonrecursive (which is good to avoid
+" conflicts and mapping infinite loops"
+" Maps '-' to delete the current line and paste it directly below
+noremap - ddp
+" Maps '_' to delete the current line and paste it directly after
+noremap _ ddkP
+" Maps <c-u> to uppercase current word in insert mode
+inoremap <c-u> <esc>viwU
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -32,11 +41,8 @@ Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'w0rp/ale'
 
 " Color scheme
-Plugin 'w0ng/vim-hybrid'
 Plugin 'nanotech/jellybeans.vim'
-Plugin 'tomasr/molokai'
-Plugin 'jnurmine/Zenburn'
-Plugin 'tomasiser/vim-code-dark'
+Plugin 'morhetz/gruvbox'
 
 " Airline setup
 Plugin 'vim-airline/vim-airline'
@@ -72,16 +78,13 @@ function GenericOptions()
 	set softtabstop=4
 	set shiftwidth=4
 endfunction
-" Filetype specific settings
+" Js/HTML specific settings to use reduced spacing
 au BufNewFile,BufRead *.js,*.html
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
-" Opens any file with doc in it in a vertical split
-augroup helpfiles
-    au!
-    au BufRead,BufEnter */doc/* wincmd L
-augroup END
+" Makefile specific settings to use tabs instead of spaces
+autocmd FileType make set noexpandtab shiftwidth=8 softtabstop=0
 
 " Search settings
 set incsearch           " search as characters are entered
@@ -93,21 +96,24 @@ nnoremap <silent><C-l> :nohlsearch<CR><C-l>
 " Visual stuff
 syntax enable
 set background=dark
-colorscheme jellybeans
+colorscheme gruvbox
 set laststatus=2 " Always display statusline
+
+
+" Plugin specific settings
 
 " BetterWhitespace Settings
 " Don't highlight for curr line
 au BufEnter * CurrentLineWhitespaceOff hard
 
 " Airline Settings
-let g:airline_theme='jellybeans'
+let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled=1 " Shows git branch in statusbar
 
 " Ale settings
 let g:ale_sign_column_always = 1 " Makes ale linting gutter always on
-let g:ale_lint_delay = 2000 " Lint after a delay
+" let g:ale_lint_delay = 2000 " Lint after a delay
 
 " YCM Settings
 " make YCM compatible with UltiSnips (using supertab)
@@ -124,7 +130,8 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 " Also close it when leaving insert mode, so that it doesn't stay open 24/7
 let g:ycm_autoclose_preview_window_after_insertion = 1
 
-" UltiSnips settings
+" UltiSnips settings to work with YCM to expand snippets and cycle through
+" parts of the snippet with <tab>
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"

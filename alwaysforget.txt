@@ -10,6 +10,7 @@ pydoc <thing to lookup>
 find <file to lookup># Seaches a directory for a file
 locate <file to lookup>#Searches whole comptuer for a file
 cd -              # Going back to previous directory
+wc -l <file>      # Gives the number of lines in a file
 
 # Compression
 zip <zip_name> <list of files to be included>
@@ -31,6 +32,7 @@ chmod             # How we change permissions
 :verbose set <option> # Tells you when a vimrc option was last set
 ]p                # Pasting in at the current indentation AFTER current line
 [p                # Pasting in at the current indentation BEFORE current line
+P                 # Pastes in before cursor
 <C-t>             # Jump back from a tag definition
 <C-]>             # Jump to the definition of a tag
 <C-o>             # Return to the previous spot in the code
