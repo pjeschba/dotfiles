@@ -68,7 +68,7 @@ def FlagsForFile(filename, **kwargs):
     language = 'c'
   elif filetype == 'cpp':
     language = 'c++'
-    extra_flags += ['-std=c++11']
+    extra_flags += ['-std=c++14']
   elif filetype == 'objc':
     language = 'objective-c'
 
