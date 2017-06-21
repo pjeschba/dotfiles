@@ -6,6 +6,7 @@
 set number " Line numbers
 set nocompatible              " required
 set hidden " Hides buffers instead of closing them
+
 " NOTE: 'noremap' makes the mapping nonrecursive (which is good to avoid
 " conflicts and mapping infinite loops"
 " Maps '-' to delete the current line and paste it directly below
@@ -14,6 +15,20 @@ noremap - ddp
 noremap _ ddkP
 " Maps <c-u> to uppercase current word in insert mode
 inoremap <c-u> <esc>viwU
+
+" Maps the window navigation commands such that you do not need to press <C-W>
+" to use them
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Setting the leader key
+let mapleader = " "
+
+" turn off search highlight
+nnoremap <leader>l :nohlsearch<CR>
+
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -41,7 +56,6 @@ Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'w0rp/ale'
 
 " Color scheme
-Plugin 'nanotech/jellybeans.vim'
 Plugin 'morhetz/gruvbox'
 
 " Airline setup
@@ -57,6 +71,9 @@ Plugin 'ctrlpvim/ctrlp.vim'
 " Git plugins
 Plugin 'tpope/vim-fugitive' " Interface to execute git commands w/in vim
 Plugin 'airblade/vim-gitgutter' " Shows changes from master on vim sidebar
+
+" tmux window pane navigation
+Plugin 'christoomey/vim-tmux-navigator'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " end of vundle plugins
@@ -90,15 +107,20 @@ autocmd FileType make set noexpandtab shiftwidth=8 softtabstop=0
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
 
-" turn off search highlight
-nnoremap <silent><C-l> :nohlsearch<CR><C-l>
-
 " Visual stuff
 syntax enable
 set background=dark
 colorscheme gruvbox
 set laststatus=2 " Always display statusline
-
+" Use a blinking upright bar cursor in Insert mode, a blinking block in normal
+if &term == 'xterm-256color' || &term == 'screen-256color'
+    let &t_SI = "\<Esc>[5 q"
+    let &t_EI = "\<Esc>[1 q"
+endif
+if exists('$TMUX')
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+endif
 
 " Plugin specific settings
 
