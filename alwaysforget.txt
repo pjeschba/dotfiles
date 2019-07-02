@@ -1,32 +1,57 @@
 # Pat's command list cheatsheet
 
-# Shell stuff
-<C-r>             # allows you to search prior terminal commands (instead of
-                  # spamming up arrow)
+# Misc
 cp -r <source> <destination> # copy directories from one place to another
 tar -zxvf <tarfile> # Untarring a tar into current directory
-# Querying from the terminal
 pydoc <thing to lookup>
 find <file to lookup># Seaches a directory for a file
 locate <file to lookup>#Searches whole comptuer for a file
 cd -              # Going back to previous directory
 wc -l <file>      # Gives the number of lines in a file
+lsof -i :<port_num> # Lists any processes running on a given port
+ls -lh              # lists file size with sig digits
+ls -a               # Hidden files as well
 
 # Compression
 zip <zip_name> <list of files to be included>
 zip -r <zip_name> <list of files to be included>
 
-# Git commands
+# Git
+git fetch            # Gets info from remote repo (aka origin)
+git pull             # Combination of `git fetch` and `merge` from origin
 git reset <filename> # Removes the file from staging area
+--hard <branch>      # Use this to nuke any local changes you have. You can
+                       Use this to sync with HEAD or with origin (remote)
+--soft               # Used when you want to preserve undo changes, leaving
+                     # them as uncommitted changes after the command runs
+git rebase <branch>  # Applies changes in branch you specify ontop of the
+                     # branch you're working on, such that it's like you always had those changes in
+                     # your branch to begin with.
+git checkout stash@{0} -- <file> # Applies a specific filechange from your
+                                 # stash to the current branch
+git checkout --.     # Checks out all files from remote
+git checkout <branch> -- <files> # Checks out specific files from specific branch
+git add -u           # Adds all already-tracked files
+git branch -d <branch>           # Deletes a local branch
+git commit --amend   # Adds onto the commit instead of making a new one
+git push --force <remote-name> <branch-name> # Lets you push ammended changes
+cherry-pick <hash>   # Puts the spec. commit hash ontop of the branch you're in
+                     # NOTE: add `-m 1` if you need to cherrypick a mergebranch
+git log --oneline    # Commit history
+git reset HEAD~      # Unstages local commits
+git log --author="<name>" # Search for commits by a certain person
+-p                   # Interactive mode! Useful for git stash, merge, etc
 
 # Permissions
 chmod             # How we change permissions
 +x                # Gives permission to run file as an executable
+-R                # Recursive
+777               # The one you want
 
 # Regex
 \                 # Use to escape so you can use metacharacters like . * etc
 
-# Vim commands
+# Vim
 :e <filename>     # Creates new file buffer and opens it in current window
 :vs <filename     # Creates vertical split window
 :verbose set <option> # Tells you when a vimrc option was last set
@@ -42,10 +67,62 @@ i                 # Means "in" (a way of referring to a chunk of something,
 a                 # Means "all"
 gqq               # format current line
 help <name_of_doc># Opens documentation for a particular thing (plugin, etc)
-# Ctrlp commands
-<C-v>             # open a file in a vertical split
-<C-f>, <C-b>      # switching between modes (buffers, files, MRU)
-F5      	      # refreshes cache (useful when you've created new files
-# Search and replace
-:s/foo/bar/g	  # Change each 'foo' to 'bar' in the current line.
+:s/foo/bar/g      # Change each 'foo' to 'bar' in the current line.
 :%s/foo/bar/g	  # Change each 'foo' to 'bar' in all the lines.
+<C-^>             # Go back to previously edited buffer (switch between)
+<Shift-K>         # Runs `man` on whatever is under the cursor
+*                 # Search for the word under your cursor
+<C-g>             # Next search occurrence
+<C-t>             # Previous search occurrence
+# Only source vimrc when actually inside of vim!
+<C-i>             # Go forward in search history
+<C-o>             # Go backward in search history
+m,M               # Yank text (vim-cutlass)
+<leader> hs       # Stage a hunk
+<leader> hu       # Unstage a hunk
+<C-X><C-V>        # Open FZF files in split!
+:Gstatus          # Interactive git fugitive mode
+    D             # Opens a diff of a file
+    -             # Stage a file
+    dgu           # Takes upstream version of file
+    dgl           # Takes local version
+    do/dp         # Used to get/revert hunks
+<C-w>=            # Resize all vim splits to take up an equal amt of space
+# Netrw
+%                 # New file
+d                 # New directory
+
+# Tmux
+<C-b>             # Enter tmux mode
+%                 # Horizontal split
+"                 # Vertical split
+x                 # Kill a pane
+&                 # Kill a window
+]                 # Lets you scroll with Pg up or arrow keys or shift-K/shift-J
+<Alt-arrow>       # Resize panes
+I                 # Install plugins and reload env
+tmux a            # attach to a session!
+<C-s>             # save a tmux session
+<C-r>             # restore a tmux session
+tmux ls           # list sessions
+w                 # list all windows. type a number to select one
+c                 # Create new window
+
+# Python
+deactivate        # Leaving a venv
+
+# Grep
+grep <flags> "text" <directory> # General format for grepping
+-R                # recursively search directories
+-i                # Ignore case
+-l                # show file name not result
+
+# Tail
+tail -f <file>    # Print the last 10 lines of a file and wait for more to come
+                  # in. A way to watch file in realtime as it gets appended to
+
+# Find
+find <directory> -name <file pattern>
+-iname            # Case insensitive
+-type f           # files only
+-type d           # directories only

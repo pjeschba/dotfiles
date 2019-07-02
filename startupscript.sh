@@ -1,3 +1,11 @@
+# Things to do NOT in this script:
+# 1. Bind CAPS LOCK to ESC
+# 2. Install Tmux and set up the conf for it!
+# 3. Install reattach to user namespace as well
+# 4. Install homebrew too
+# 6. Install the_silver_searcher (Ag)
+# 7. curl -O https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash.
+
 # Making the necessary symlinks to .rc files
 ./~/makesymlinks.sh
 
