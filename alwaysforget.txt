@@ -1,17 +1,17 @@
 # Pat's command list cheatsheet
 
 # Misc
-cp -r <source> <destination> # copy directories from one place to another
-tar -zxvf <tarfile> # Untarring a tar into current directory
-pydoc <thing to lookup>
-find <file to lookup># Seaches a directory for a file
 locate <file to lookup>#Searches whole comptuer for a file
 cd -              # Going back to previous directory
 wc -l <file>      # Gives the number of lines in a file
 lsof -i :<port_num> # Lists any processes running on a given port
 ls -lh              # lists file size with sig digits
 ls -a               # Hidden files as well
-
+cp -r <source> <destination> # copy directories from one place to another
+tar -zxvf <tarfile> # Untarring a tar into current directory
+pydoc <thing to lookup>
+find <directory_to_search> -name "<regex>" # Searches a directory for a file
+                                           # Omit first param to search curr dir
 # Compression
 zip <zip_name> <list of files to be included>
 zip -r <zip_name> <list of files to be included>
@@ -58,6 +58,8 @@ chmod             # How we change permissions
 ]p                # Pasting in at the current indentation AFTER current line
 [p                # Pasting in at the current indentation BEFORE current line
 P                 # Pastes in before cursor
+"0p               # Pastes from the yanked register - " is register, 0 is the
+                    yank register
 <C-t>             # Jump back from a tag definition
 <C-]>             # Jump to the definition of a tag
 <C-o>             # Return to the previous spot in the code
@@ -88,6 +90,14 @@ m,M               # Yank text (vim-cutlass)
     dgl           # Takes local version
     do/dp         # Used to get/revert hunks
 <C-w>=            # Resize all vim splits to take up an equal amt of space
+
+# Ack commands
+<space> a [options] {pattern} [{directories}] # Opens Ack to search 
+o                 # Goes to file in quicklist
+O                 # Goes to file in quicklist and closes quicklist
+g                 # Preview file
+v                 # Open file in vertical split
+
 # Netrw
 %                 # New file
 d                 # New directory
@@ -112,6 +122,7 @@ c                 # Create new window
 deactivate        # Leaving a venv
 
 # Grep
+grep -r "<texthere>" . # -r is recursive, <text> is text, . is current dir
 grep <flags> "text" <directory> # General format for grepping
 -R                # recursively search directories
 -i                # Ignore case

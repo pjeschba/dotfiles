@@ -13,16 +13,18 @@ __git_complete gpu _git_push
 export PS1="\W @ \h [\u] $ "
 
 # Colorscheme stuff
-BASE16_SHELL=$HOME/.config/base16-shell/
-[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+# BASE16_SHELL=$HOME/.config/base16-shell/
+# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+source "$HOME/.vim/bundle/gruvbox/gruvbox_256palette.sh"
 
 # Path stuff
 export PATH="$HOME/.node_modules_global/bin:$PATH:$HOME/dotfiles"
 
 # Aliases
 alias unraid='ssh root@10.1.10.48'
-alias UMich='cd ~/Documents/UMich/2016-2017'
+alias UMich='cd ~/Documents/UMich/2017-2018'
 alias c++='g++ -Wall -Werror -pedantic -g -std=c++14'
+
 # Git aliases
 alias gs='git status'
 alias gch='git checkout'
@@ -65,3 +67,10 @@ esac
 # Tells FZF to use ag, only printing filenames without color, including hidden ones
 alias ag='ag --path-to-ignore ~/.ignore'
 export FZF_DEFAULT_COMMAND='ag -l --nocolor --hidden -g ""'
+
+alias clr='clear'
+
+# Vi mode in bash
+set -o vi
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+export PATH="/usr/local/opt/openssl/bin:$PATH"
