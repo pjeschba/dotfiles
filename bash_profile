@@ -4,6 +4,11 @@
 
 [ -f /usr/local/etc/bash_completion.d ] && . /usr/local/etc/bash_completion.d
 
+source ~/.nvm/nvm.sh # So nvm will be loaded and work
+
+# Make it so OSX knows about our global gitignore file
+git config --global core.excludesfile ~/.gitignore
+
 source ~/dotfiles/git-completion.bash
 __git_complete gch _git_checkout
 __git_complete ga _git_add
@@ -15,7 +20,6 @@ export PS1="\W @ \h [\u] $ "
 # Colorscheme stuff
 # BASE16_SHELL=$HOME/.config/base16-shell/
 # [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-source "$HOME/.vim/bundle/gruvbox/gruvbox_256palette.sh"
 
 # Path stuff
 export PATH="$HOME/.node_modules_global/bin:$PATH:$HOME/dotfiles"
@@ -31,15 +35,11 @@ alias gch='git checkout'
 alias ga='git add '
 alias gb='git branch '
 alias gco='git commit '
-alias gcof='git commit --amend --no-edit'
+alias gcof='git commit --amend --no-edit && git push --force'
 alias gpl='git pull '
 alias gpu='git push '
 alias gm='git merge '
 alias gd='git diff '
-function gpuf() {
-    CURRENT_BRANCH=$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
-    git push --force origin $CURRENT_BRANCH
-}
 
 # Functions
 
@@ -64,9 +64,9 @@ case "$choice" in
 esac
 }
 
-# Tells FZF to use ag, only printing filenames without color, including hidden ones
-alias ag='ag --path-to-ignore ~/.ignore'
-export FZF_DEFAULT_COMMAND='ag -l --nocolor --hidden -g ""'
+# Tells FZF to use ag, only printing filenames, including hidden ones, and
+# respecting .gitignore
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 
 alias clr='clear'
 
@@ -74,3 +74,4 @@ alias clr='clear'
 set -o vi
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
+

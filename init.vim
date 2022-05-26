@@ -52,14 +52,10 @@ filetype off                  " required
 
 call plug#begin('~/.local/share/nvim/plugged')
 " Language client
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-
-" Try this one
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 
 " Fuzzy selection
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 " Color Scheme
 Plug 'romainl/Apprentice'
@@ -75,9 +71,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'christoomey/vim-conflicted'
 
-" Linting
-Plug 'w0rp/ale'
-
 " Commenter plugin
 Plug 'tpope/vim-commentary'
 
@@ -86,11 +79,6 @@ Plug 'airblade/vim-gitgutter'
 
 " Vim session plugin (used with tmux to save where you left off"
 Plug 'tpope/vim-obsession'
-
-" Javascript syntax improvements
-Plug 'pangloss/vim-javascript'
-" Typescript syntax
-Plug 'leafgarland/typescript-vim'
 
 " Enables the use of `.` with plugin mappings - used for gitgutter hunk navigation
 Plug 'tpope/vim-repeat'
@@ -102,30 +90,6 @@ call plug#end()
 
 " Colorscheme
 colorscheme apprentice
-
-" Minimal LSP configuration for JavaScript
-if executable('typescript-language-server')
-    au User lsp_setup call lsp#register_server({
-      \ 'name': 'javascript support using typescript-language-server',
-      \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-      \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.git/..'))},
-      \ 'whitelist': ['javascript', 'javascript.jsx']
-      \ })
-endif
-let g:lsp_diagnostics_enabled = 0         " disable diagnostics support
-
-" <leader>ld to go to definition
-" autocmd FileType javascript,python nnoremap <silent>
-"   \ <leader>d  :LspDefinition<cr>
-" " <leader>lh for type info under cursor
-" autocmd FileType javascript,python nnoremap <silent>
-"   \ <leader>t  :LspTypeDefinition<cr>
-" " <leader>lr to rename variable under cursor
-" autocmd FileType javascript,python nnoremap <silent>
-"   \ <leader>r  :LspRename<cr>
-" " <leader>f to fuzzy find the symbols in the current document
-" autocmd FileType javascript,python nnoremap <silent>
-"   \ <leader>f  :LspReferences<cr>
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -150,6 +114,16 @@ nmap <silent> <leader>y <Plug>(coc-type-definition)
 nmap <silent> <leader>i <Plug>(coc-implementation)
 nmap <silent> <leader>r <Plug>(coc-references)
 nmap <leader>m <Plug>(coc-rename)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Use K for show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -162,32 +136,27 @@ function! s:show_documentation()
   endif
 endfunction
 
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
 "fzf mappings
+"Search filenames
 nnoremap <c-p> :FZF<cr>
+"Search file contents
+nnoremap <leader>f :Ag<cr>
+"Search open files
+nnoremap <leader>b :Buffers<cr>
 
-" Ale stuff
-let g:ale_sign_column_always = 1 " Turns the sign on all the time
-" Linters to use
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'typescript': ['tslint'],
-\   'python': ['pyflakes'],
-\}
-" Fixers
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint'],
-\   'typescript': ['tslint'],
-\   'python': ['autopep8']
-\}
-" Only lint on save
-let g:ale_fix_on_save = 1
-let g:ale_lint_on_text_changed = 'never'
-" Navigating errors
-nmap <silent> <leader>k <Plug>(ale_previous_wrap)
-nmap <silent> <leader>j <Plug>(ale_next_wrap)
-
-"
 " General file settings
 autocmd BufNewFile,BufRead * call GenericOptions()
 function! GenericOptions()
@@ -201,8 +170,7 @@ function! GenericOptions()
 	set shiftwidth=4
 endfunction
 " Js/HTML specific settings to use reduced spacing
-au BufNewFile,BufRead *.js,*.html,*.less,*.css,*.json,*.ts
-    \ set noexpandtab |
+au BufNewFile,BufRead *.js,*.html,*.less,*.css,*.json,*.ts,*.jsx,*.tsx
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
@@ -227,8 +195,4 @@ augroup vimrc-incsearch-highlight
   autocmd CmdlineLeave [/\?] :set nohlsearch " When you leave, stop highlighting
 augroup END
 
-" Enabling javascript folding
-" augroup javascript_folding
-"     au!
-"     au FileType javascript setlocal foldmethod=syntax foldopen=hor,search foldclose=all
-" augroup END
+set rtp+=/usr/local/opt/fzf

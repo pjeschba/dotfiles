@@ -1,7 +1,7 @@
 # Pat's command list cheatsheet
 
 # Misc
-locate <file to lookup>#Searches whole comptuer for a file
+locate <file to lookup>#Searches whole computer for a file
 cd -              # Going back to previous directory
 wc -l <file>      # Gives the number of lines in a file
 lsof -i :<port_num> # Lists any processes running on a given port
@@ -27,6 +27,7 @@ git reset <filename> # Removes the file from staging area
 git rebase <branch>  # Applies changes in branch you specify ontop of the
                      # branch you're working on, such that it's like you always had those changes in
                      # your branch to begin with.
+git stash save "<msg>"           # Stash a set of changes with a name behind it
 git checkout stash@{0} -- <file> # Applies a specific filechange from your
                                  # stash to the current branch
 git checkout --.     # Checks out all files from remote
@@ -54,6 +55,7 @@ chmod             # How we change permissions
 # Vim
 :e <filename>     # Creates new file buffer and opens it in current window
 :vs <filename     # Creates vertical split window
+:sp <filename     # Creates horizontal split window (omit a filename and it will open with current file
 :verbose set <option> # Tells you when a vimrc option was last set
 ]p                # Pasting in at the current indentation AFTER current line
 [p                # Pasting in at the current indentation BEFORE current line
@@ -91,8 +93,8 @@ m,M               # Yank text (vim-cutlass)
     do/dp         # Used to get/revert hunks
 <C-w>=            # Resize all vim splits to take up an equal amt of space
 
-# Ack commands
-<space> a [options] {pattern} [{directories}] # Opens Ack to search 
+# Ack
+<space> a [options] {pattern} [{directories}] # Opens Ack to search
 o                 # Goes to file in quicklist
 O                 # Goes to file in quicklist and closes quicklist
 g                 # Preview file
